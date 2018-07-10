@@ -1,0 +1,32 @@
+#   -------------------------------
+#   GIT HAX AND SCRIPTS
+#   -------------------------------
+
+# some standard aliases
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+
+#   prettier "git log"
+#   ----------------------
+git config --global alias.lg "log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'"
+
+#	reset to HEAD
+#	----------------------
+git config --global alias.unstage 'reset HEAD --'
+
+#   reset HARD
+#   ----------------------
+git config --global alias.rh "reset --hard"
+
+#   alias for git 'add, commit, push'
+#   ----------------------
+gap () { git add . && git commit -m "$1" && git push; }
+
+#   add BRANCH to CLI output for git commands
+#   ----------------------
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
